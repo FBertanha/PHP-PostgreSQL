@@ -8,12 +8,11 @@
 # Criacao.....: 2017-10-24
 # Atualizacao.: 2017-10-25 - Ajustes e testes gerais.
 #               2017-10-26 - RevisÃ£o e descarta de linhas desnecessÃ¡rias.
-# Modificação.: Felipe Bertanha
-# Atualizacao.: 2017-11-11
+# Modificação.: 2017-11-11 - Adaptado para funcionários. Felipe Bertanha
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Carregar o ToolsKit (e executar as funÃ§Ãµes Gerais disponÃ­veis no grupo de funÃ§Ãµes)
 require_once("../toolskit.php");
-# Carregar o arquivo com as funÃ§Ãµes locais da tabela medicos
+# Carregar o arquivo com as funÃ§Ãµes locais da tabela funcionários
 require_once("funcionrfuncoes.php");
 # Atribuindo o valor de $acao, $passo, $salto, $corfundo e $corfonte
 $acao = "Alterar";
@@ -27,7 +26,7 @@ iniciapagina($corfundo,$corfonte,$acao);
 SWITCH (TRUE)
 { # 1 - Este Ã© o comando de desvio principal do programa. -----------------------------------------------------------------------------------
     case ( $passo==1 ):
-    { # 1.1 - executa a funÃ§Ã£o medicosfun01() - monta a picklist escolhendo o registro de alteraÃ§Ã£o ------------------------------------------
+    { # 1.1 - executa a funÃ§Ã£o funcionrfun01() - monta a picklist escolhendo o registro de alteraÃ§Ã£o ------------------------------------------
         funcionrfun01($acao,$passo,$salto);
         break;
     } # 1.1 -----------------------------------------------------------------------------------------------------------------------------------
@@ -76,10 +75,10 @@ SWITCH (TRUE)
         pg_set_client_encoding('utf8');
         # exibindo mensagem de orientaÃ§Ã£o
         printf("Alterando o Registro...<br>\n");
-        # Executando o case que grava (UPDATE) os dados na tabela medicos.
+        # Executando o case que grava (UPDATE) os dados na tabela funcionários.
         # Tratamento da TransaÃ§Ã£o
         # Inicio da transaÃ§Ã£o - No PostgreSQL se inica com o comando BEGIN. Colocamos dentro de um WHILE para poder
-        # controlar o reinicio da transaÃ§Ã£o caso aconteÃ§a um DEADLOCK.
+        # controlar o reinicio da transaÃ§Ã£o caso aconteça um DEADLOCK.
         $tentativa=TRUE;
         while ( $tentativa )
         { # 1.3.1-LaÃ§o de repetiÃ§Ã£o para tratar a transaÃ§Ã£o -------------------------------------------------------------------------------------
@@ -138,5 +137,5 @@ SWITCH (TRUE)
         break;
     } # 1.3-Fim do Bloco de Tratamento da TransaÃ§Ã£o -------------------------------------------------------------------------------------------
 } # 1-Fim do divisor de blocos principAl ----------------------------------------------------------------------------------------------------
-terminapagina($acao,"medicosincluir.php",FALSE);
+terminapagina($acao,"funcionrincluir.php",FALSE);
 ?>

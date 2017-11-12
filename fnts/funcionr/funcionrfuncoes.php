@@ -1,7 +1,7 @@
 <?php
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
-# Programa....: medicosfuncoes.php
-# Descricao...: Segmentos de códigos que implementam funções usados nos programas de gerenciamento da tabela: MEDICOS.
+# Programa....: funcionrfuncoes.php
+# Descricao...: Segmentos de códigos que implementam funções usados nos programas de gerenciamento da tabela: funcionários.
 # Autor.......: Joao Mauricio Hypolito - Copie mas diga quem fez.
 # Objetivo....: Programas (código-fonte comentado) que executam as funções:
 #               - Montar uma caixa de seleção para escolha de um registro (fun01) - usado na consulta, alteração e exclusão
@@ -9,6 +9,7 @@
 #               - Montar o formulário para entrada de dados (fun03) - usado na inclusão e alteração
 # Criacao.....: 2017-10-24
 # Atualizacao.: 2015-10-25 - Ajustes gerais nas três funções
+# Modificação.: 2017-11-11 - Adaptado para funcionários. Felipe Bertanha
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 function funcionrfun01($acao,$passo,$salto)
 { # Esta função monta uma caixa de seleção para escolha de um registro para Consulta, Alteração ou Exclusão.
@@ -40,7 +41,7 @@ function funcionrfun01($acao,$passo,$salto)
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 function funcionrfun02($PK)
 { # Esta função recebe um valor da PK, consulta o registro e mostra o registro em uma tabela.
-    # Este próximo comando é uma junção de médicos, logradouros (duas vezes com nomes L1 e L2), especmedicas e instituicaoensino.
+    # Este próximo comando é uma junção de funcionários, departamentos, funções, logradouros e niveleducacao
     $sql   = pg_query("select * from funcionarios func
                                     inner join departamentos dep
                                       on func.cedepto = dep.cpdepto
@@ -97,7 +98,7 @@ function funcionrfun03($acao,$passo,$salto)
     printf("<input type='hidden' name='salto' value='$salto'>\n");
     # Agora se monta uma tabela com os campos para entrada de dados.
     # SE a acao for INCLUIR, então um vetor $reg sem conteúdo deve ser montado,
-    # SE a acao for ALTERAR, então um vetor $reg é montado com campos da tabelas medicos (e com os valores para a PK escolhida)
+    # SE a acao for ALTERAR, então um vetor $reg é montado com campos da tabelas funcionários (e com os valores para a PK escolhida)
     printf("$acao<br>\n");
     if ( $acao=='Incluir' )
     {
@@ -240,5 +241,5 @@ function funcionrfun03($acao,$passo,$salto)
     printf("</table>\n");
     printf("</form>\n");
 }
-## Aqui termina a declaração das três funções de tratamento da tabela medicos. As outras funções (sistêmicas) estão escritas no toolskit.
+## Aqui termina a declaração das três funções de tratamento da tabela funcionários. As outras funções (sistêmicas) estão escritas no toolskit.
 ?>

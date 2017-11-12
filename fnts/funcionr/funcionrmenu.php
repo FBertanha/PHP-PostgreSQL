@@ -8,6 +8,7 @@
 #               respectivamente. A execucao dos programas devem acontecer no quadro Q2.
 # Criacao.....: 2017-10-24
 # Atualizacao.: 2017-10-24 - Ajustes gerais. Adequação dos alvos dos programas à estrutura dos frames.
+# Modificação.: 2017-11-11 - Adaptado para funcionários. Felipe Bertanha
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 require_once("../toolskit.php");
 iniciapagina("#FFDEAD","#000000","Menu"); # $cordefundo,$corfonte);

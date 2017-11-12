@@ -1,16 +1,17 @@
 <?php
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
-# Programa....: medicosincluir.php
+# Programa....: funcionrincluir.php
 # Descricao...: Montar do formulário para entrada de dados e executar o controle da transação de INSERT
 # Autor.......: João Maurício Hypólito - Copie mas diga quem fez
 # Objetivo....: Montar um form usando a função local fun03 com parâmetro INCLUIR, depois lê os dados e executa o controle da transação de INSERT.
 # Criacao.....: 2017-10-24
 # Atualizacao.: 2017-10-25 - Ajustes e testes gerais.
 #               2017-10-26 - Revisão e descarta de linhas desnecessárias.
+# Modificação.: 2017-11-11 - Adaptado para funcionários. Felipe Bertanha
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Carregar o ToolsKit (e executar as funÃ§Ãµes Gerais disponÃ­veis no grupo de funÃ§Ãµes)
 require_once("../toolskit.php");
-# Carregar o arquivo com as funÃ§Ãµes locais da tabela medicos
+# Carregar o arquivo com as funÃ§Ãµes locais da tabela funcionarios
 require_once("funcionrfuncoes.php");
 # Atribuindo o valor de $acao, $passo, $salto, $corfundo e $corfonte
 $acao = "Incluir";
@@ -33,7 +34,7 @@ SWITCH (TRUE)
     } # 1.1-Fim do Bloco que monta o form de entrada de dados -------------------------------------------------------------------------------------
     case ( $passo==2 ):
     { # 1.2-Bloco para Tratamento da Transação ----------------------------------------------------------------------------------------------------
-        # Executando o case que grava (INSERT) os dados na tabela medicos.
+        # Executando o case que grava (INSERT) os dados na tabela funcionarios.
         # Alguns campos podem ter conteúdo indevido para a construção do comando INSERT. Pode ser um SQL injection ou um simples caractere que rompe
         # a cadeia de caracteres que montam o comando de atualização no Banco. Podemos usar o PHP e fazer uma substituição de caracteres ou até mesmo
         # bloquear a execução dos comandos que seguem este trecho.
@@ -64,7 +65,7 @@ SWITCH (TRUE)
             $dtcadfuncionario=$_POST['anocad'].'-'.$_POST['mescad'].'-'.$_POST['diacad'];
             $dtcontrfuncionario=$_POST['anocontr'].'-'.$_POST['mescontr'].'-'.$_POST['diacontr'];
             $dtnascfuncionario=$_POST['anonasc'].'-'.$_POST['mesnasc'].'-'.$_POST['dianasc'];
-            # Vamos pegar o último código gravado na tabela medicos. Este trecho fica 'dentro' da transação para gerar
+            # Vamos pegar o último código gravado na tabela funcionarios. Este trecho fica 'dentro' da transação para gerar
             # o bloqueio na página de dados que vai gravar o próximo registro.
             # Estamos gerando o valor da PK e NÃO usando campos autoincrementados PORQUE este recurso não está disponível em todos os SGBDs
             # e SE UM DIA um ilustre aluno trabalhar com um destes SGBD vai se lembrar que um professor ensinou a trabalhar a determinação

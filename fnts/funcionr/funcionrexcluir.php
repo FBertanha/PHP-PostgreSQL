@@ -1,6 +1,6 @@
 <?php
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
-# Programa....: medicosexcluir.php
+# Programa....: funcionrexcluir.php
 # Descricao...: Montar do formulÃ¡rio escolher e exibir os dados de um registro. Montar um form de confirmaÃ§Ã£o da exclusÃ£o.
 #               Executar o controle da transaÃ§Ã£o de DELETE.
 # Autor.......: JoÃ£o MaurÃ­cio HypÃ³lito - Copie mas diga quem fez
@@ -9,10 +9,11 @@
 # Criacao.....: 2017-10-24
 # Atualizacao.: 2017-10-25 - Ajustes e testes gerais.
 #               2017-10-26 - RevisÃ£o e descarta de linhas desnecessÃ¡rias.
+# Modificação.: 2017-11-11 - Adaptado para funcionários. Felipe Bertanha
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Carregar o ToolsKit (e executar as funÃ§Ãµes Gerais disponÃ­veis no grupo de funÃ§Ãµes)
 require_once("../toolskit.php");
-# Carregar o arquivo com as funÃ§Ãµes locais da tabela medicos
+# Carregar o arquivo com as funÃ§Ãµes locais da tabela funcionários
 require_once("funcionrfuncoes.php");
 # Atribuindo o valor de $acao, $passo, $salto, $corfundo e $corfonte
 $acao = "Excluir";
@@ -26,7 +27,7 @@ iniciapagina($corfundo,$corfonte,$acao);
 SWITCH (TRUE)
 { # 1-montando a tela de form para digitaÃ§Ã£o dos dados para inclusÃ£o ----------------------------------------------------------------------------
     case ( $passo==1 ):
-    { # 1.1 - executa a funÃ§Ã£o medicosfun01() - monta a picklist escolhendo o registro de consulta ------------------------------------------------
+    { # 1.1 - executa a funÃ§Ã£o funcionrfun01() - monta a picklist escolhendo o registro de consulta ------------------------------------------------
         funcionrfun01($acao,$passo,$salto);
         break;
     } # 1.1 ---------------------------------------------------------------------------------------------------------------------------------------
@@ -55,7 +56,7 @@ SWITCH (TRUE)
         # exibindo mensagem de orientaÃ§Ã£o
         printf("Excluindo o Registro...<br>\n");
         #--------------------------------------------------------------------------------------------------------------------------------------------
-        # Executando o case que remove (DELETE) os dados na tabela medicos.
+        # Executando o case que remove (DELETE) os dados na tabela funcionários.
         # Tratamento da TransaÃ§Ã£o
         # Inicio da transaÃ§Ã£o - No PostgreSQL se inica com o comando BEGIN. Colocamos dentro de um WHILE para poder
         # controlar o reinicio da transaÃ§Ã£o caso aconteÃ§a um DEADLOCK.

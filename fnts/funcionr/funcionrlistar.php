@@ -10,6 +10,7 @@
 # Criacao.....: 2017-10-24
 # Atualizacao.: 2017-10-25 - Ajustes e testes gerais.
 #               2017-10-26 - RevisÃ£o e descarta de linhas desnecessÃ¡rias.
+# Modificação.: 2017-11-11 - Adaptado para funcionários. Felipe Bertanha
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Carregar o ToolsKit (e executar as funÃ§Ãµes Gerais disponÃ­veis no grupo de funÃ§Ãµes)
 require_once("../toolskit.php");
