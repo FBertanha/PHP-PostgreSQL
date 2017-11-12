@@ -27,17 +27,17 @@ SWITCH (TRUE)
 { # 1-montando a tela de form para digitaÃ§Ã£o dos dados para inclusÃ£o ----------------------------------------------------------------------------
     case ( $passo==1 ):
     { # 1.1 - executa a funÃ§Ã£o medicosfun01() - monta a picklist escolhendo o registro de consulta ------------------------------------------------
-        medicosfun01($acao,$passo,$salto);
+        funcionrfun01($acao,$passo,$salto);
         break;
     } # 1.1 ---------------------------------------------------------------------------------------------------------------------------------------
     case ( $passo==2 ):
     { # 1.2 - mostrando o registro escolhido ------------------------------------------------------------------------------------------------------
-        medicosfun02("$_POST[cpmedico]");
-        printf("<form action='./medicosexcluir.php'  method='POST'>\n");
+        funcionrfun02("$_POST[cpfuncionario]");
+        printf("<form action='funcionrexcluir.php'  method='POST'>\n");
         printf("<input type='hidden' name='acao'  value='$acao'>\n");
         printf("<input type='hidden' name='passo' value=3>\n");
         printf("<input type='hidden' name='salto' value='$salto'>\n");
-        printf("<input type='hidden' name='cpmedico' value='$_POST[cpmedico]'>\n");
+        printf("<input type='hidden' name='cpfuncionario' value='$_POST[cpfuncionario]'>\n");
         # montando os botÃµes do form com a funÃ§Ã£o botoes e os parÃ¢metros:
         # (PÃ¡gina,Menu,SaÃ­da,Reset,AÃ§Ã£o,$salto) TRUE | FALSE para os 4 parÃ¢metros esq-dir.
         botoes(TRUE,TRUE,TRUE,FALSE,"Confirma a Exclus&atilde;o",$salto);
@@ -47,7 +47,7 @@ SWITCH (TRUE)
     case ( $passo==3 ):
     { # 1.3-Bloco para Tratamento da TransaÃ§Ã£o
         # Montando o comando de DELETE
-        $cmd="DELETE FROM medicos WHERE cpmedico='$_POST[cpmedico]'";
+        $cmd="DELETE FROM funcionarios WHERE cpfuncionario='$_POST[cpfuncionario]'";
         # Ajustando a tabela de simbolos recebidos/enviados para o BD para UTF8
         pg_query("SET NAMES 'utf8'");
         pg_query("SET CLIENT_ENCODING TO 'utf8'");
@@ -111,5 +111,5 @@ SWITCH (TRUE)
         break;
     } # 1.3-Fim do Bloco de Tratamento da TransaÃ§Ã£o -----------------------------------------------------------------------------------------------
 } # 1-Fim do divisor de blocos principal --------------------------------------------------------------------------------------------------------
-terminapagina($acao,"medicosconsultar.php",FALSE);
+terminapagina($acao,"funcionrconsultar.php",FALSE);
 ?>

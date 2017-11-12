@@ -13,7 +13,7 @@
 function funcionrfun01($acao,$passo,$salto)
 { # Esta função monta uma caixa de seleção para escolha de um registro para Consulta, Alteração ou Exclusão.
     # determinando qual programa será chamado pela função
-    $prg=( $acao=='Consultar' ) ? "funcionrconsultar.php" : (( $acao=='Alterar' ) ? "funcionralterar.php" : "funcionrsexcluir.php");
+    $prg=( $acao=='Consultar' ) ? "funcionrconsultar.php" : (( $acao=='Alterar' ) ? "funcionralterar.php" : "funcionrexcluir.php");
     $passo=$passo+1;
     # Executando comandos em SQL nas tabelas da base que foi acessada. Usamos a função pg_query.
     # Esta função RETORNA: O NOME da tabela acessada, os CAMPOS e os ENDEREÇOS de Registros lidos no comando
@@ -101,20 +101,32 @@ function funcionrfun03($acao,$passo,$salto)
     printf("$acao<br>\n");
     if ( $acao=='Incluir' )
     {
-        $reg['cpmedico']='';
-        $reg['txnomemedico']='';
-        $reg['nucrm']='';
-        $reg['ceespecialidade']='';
-        $reg['ceinstituicao']='';
-        $reg['celogradouromoradia']='';
-        $reg['txcomplementomoradia']='';
-        $reg['celogradouroclinica']='';
-        $reg['txcomplementoclinica']='';
-        $reg['aoativo']='';
+        $reg['cpfuncionario']='';
+        $reg['txprenomes']='';
+        $reg['txsobrenome']='';
+        $reg['cedepto']='';
+        $reg['cefuncao']='';
+        $reg['nuramal']='';
+        $reg['celogradouro']='';
+        $reg['txcomplemento']='';
+        $reg['diacontr']='';
+        $reg['mescontr']='';
+        $reg['anocontr']='';
+        $reg['ceniveleducacao']='';
+        $reg['aosexo']='';
+        $reg['dianasc']='';
+        $reg['mesnasc']='';
+        $reg['anonasc']='';
+        $reg['txresenha']='';
+        $reg['vlsalario']='';
+        $reg['vlbonus']='';
+        $reg['vlcomissao']='';
+        $reg['nucep']='';
+
         $reg['diacad']='';
         $reg['mescad']='';
         $reg['anocad']='';
-        $prg='medicosincluir.php';
+        $prg='funcionrincluir.php';
         $mens="Ser&aacute; gerado pelo sistema";
     }
     else

@@ -43,7 +43,7 @@ SWITCH (TRUE)
     #------------------------------------------------------------------------------------------------------------------------------------------------------------
     case ($passo==1):
     { # 1.6.1.1 Vamos montar o formulario para escolha da ordenação dos dados no relatório
-        printf("<form action='./medicosrel01.php' method='post'>\n");
+        printf("<form action='relatorio001.php' method='post'>\n");
         printf("<input type='hidden' name='passo' value='2'>\n");
         printf("<input type='hidden' name='salto' value='$salto'>\n");
         printf("Esta tela deve apresentar alguma forma de ESCOLHA de dados para SELE&Ccedil;&Atilde;O<br>\n");

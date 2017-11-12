@@ -9,7 +9,7 @@
 # Atualizacao.: 2017-10-24 - Ajustes nos parâmetros CSS que customizam os frames.
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 printf("<html>\n");
-printf("<iframe name='Q1' src='./medicosmenu.php' style=\"position:fixed;
+printf("<iframe name='Q1' src='funcionrmenu.php' style=\"position:fixed;
                                                             top:0px;
                                                             left:0px;
                                                             bottom:0px;
@@ -21,7 +21,7 @@ printf("<iframe name='Q1' src='./medicosmenu.php' style=\"position:fixed;
                                                             padding:0;
                                                             overflow:hidden;
                                                             z-index:999999;\" scrolling=no></iframe>\n");
-printf("<iframe name='Q2' src='./medicosabre.php' style=\"position:fixed;
+printf("<iframe name='Q2' src='funcionrabre.php' style=\"position:fixed;
                                                             top:75px;
                                                             left:0px;
                                                             bottom:0px;

@@ -28,7 +28,7 @@ SWITCH (TRUE)
         # Montando o form de leitura dos dados dos campos da tabela (os campos FORM terão os mesmos NOMES dos campos da tabela.
         # Aqui vamos montar um form 'passando' o valor $passo para 2.
         $passo=$passo+1;
-        medicosfun03($acao,$passo,$salto);
+        funcionrfun03($acao,$passo,$salto);
         break;
     } # 1.1-Fim do Bloco que monta o form de entrada de dados -------------------------------------------------------------------------------------
     case ( $passo==2 ):
@@ -39,7 +39,7 @@ SWITCH (TRUE)
         # bloquear a execução dos comandos que seguem este trecho.
         #
         # Neste ponto do programa podemos usar funções do PHP para trocar caracteres indevidos para o INSERT.
-        $_POST['txnomemedico']=str_replace("'", "''", $_POST['txnomemedico']);
+        $_POST['txprenomes']=str_replace("'", "''", $_POST['txprenomes']);
         # Ajustando a tabela de simbolos recebidos/enviados para o BD para UTF8
         pg_query("SET NAMES 'utf8'");
         pg_query("SET CLIENT_ENCODING TO 'utf8'");
@@ -61,28 +61,37 @@ SWITCH (TRUE)
             # A cada send_query o PostgreSQL responde com um sinal de status (erro ou não erro).
             # Por conta disso deve-se "ler" este status com as funções pg_getr_result() e pg_result_error().
             # Montando em uma variavel a data de cadastro no formato do BD
-            $dtcadmedico=$_POST['anocad'].'-'.$_POST['mescad'].'-'.$_POST['diacad'];
+            $dtcadfuncionario=$_POST['anocad'].'-'.$_POST['mescad'].'-'.$_POST['diacad'];
+            $dtcontrfuncionario=$_POST['anocontr'].'-'.$_POST['mescontr'].'-'.$_POST['diacontr'];
+            $dtnascfuncionario=$_POST['anonasc'].'-'.$_POST['mesnasc'].'-'.$_POST['dianasc'];
             # Vamos pegar o último código gravado na tabela medicos. Este trecho fica 'dentro' da transação para gerar
             # o bloqueio na página de dados que vai gravar o próximo registro.
             # Estamos gerando o valor da PK e NÃO usando campos autoincrementados PORQUE este recurso não está disponível em todos os SGBDs
             # e SE UM DIA um ilustre aluno trabalhar com um destes SGBD vai se lembrar que um professor ensinou a trabalhar a determinação
             # do próximo valor de uma chave primária DENTRO da aplicação. Para 'brincar' com o conceito...
             # SUPONDO que o passo de incremento seja 1 (um)... escrevemos.
-            $proxpk=pg_result(pg_query("SELECT max(cpmedico)+1 as CMAX FROM medicos"),0,'CMAX');
+            $proxpk=pg_result(pg_query("SELECT max(cpfuncionario)+1 as CMAX FROM funcionarios"),0,'CMAX');
             # A tabela pode estar vazia, neste caso o CMAX é nulo e $proxpk NÃO recebe valor. Então a proxima PK deve ser 1.
             $cp=( isset($proxpk) ) ? $proxpk : 1;
             # Montando o comando de INSERT (Dentro do laço de repatição das tentativas porque o valor da PK depende da leitura da tabela 'dentro' da transação)
-            $cmd="INSERT INTO medicos VALUES ('$cp',
-                                        '$_POST[txnomemedico]',
-                                        '$_POST[nucrm]',
-                                        '$_POST[ceespecialidade]',
-                                        '$_POST[ceinstituicao]',
-                                        '$_POST[celogradouromoradia]',
-                                        '$_POST[txcomplementomoradia]',
-                                        '$_POST[celogradouroclinica]',
-                                        '$_POST[txcomplementoclinica]',
-                                        '$_POST[aoativo]',
-                                        '$dtcadmedico') RETURNING cpmedico";
+            $cmd="INSERT INTO funcionarios VALUES ('$cp',
+                                        '$_POST[txprenomes]',
+                                        '$_POST[txsobrenome]',
+                                        '$_POST[cedepto]',
+                                        '$_POST[cefuncao]',
+                                        '$_POST[nuramal]',
+                                        '$_POST[celogradouro]',
+                                        '$_POST[txcomplemento]',
+                                        '$dtcontrfuncionario',
+                                        '$_POST[ceniveleducacao]',
+                                        '$_POST[aosexo]',
+                                        '$dtnascfuncionario',
+                                        '$_POST[txresenha]',
+                                        '$_POST[vlsalario]',
+                                        '$_POST[vlbonus]',
+                                        '$_POST[vlcomissao]',
+                                        '$_POST[nucep]',
+                                        '$dtcadfuncionario') RETURNING cpfuncionario";
             # O comando INSERT pode ser escrito em uma só linha (mais extenso), o que pode dificultar encontrar um erro eventual.
             # Na forma 'quebrada' fica mais fácil entender o comando.
             # Para o SGBD os sinais de enter e os espaços em branco não afeta o comando INSERT.
@@ -91,7 +100,7 @@ SWITCH (TRUE)
             $result=pg_get_result($dbp);
             $erro=pg_result_error($result);
             $volta=pg_fetch_array($result);
-            $PK=$volta['cpmedico'];
+            $PK=$volta['cpfuncionario'];
             # O Próximo SWITCH trata as situações de erro. A função pg_get_result($dbp) retorna o número do erro do PostgreSQL.
             # Dentro deste SwitchCase atribui-se o valor de $mostra.
             # $mostra vale FALSE se acontecer algum erro na execução e TRUE se a transação terminar SEM erro.
@@ -116,7 +125,7 @@ SWITCH (TRUE)
                 } # 1.2.1.1.2 -------------------------------------------------------------------------------------------------------------------------
                 case $erro != '' AND  $erro!= 'deadlock_detected' :
                 { # 1.2.1.1.3 - Erro! NÃO por deadlock. AVISAR o usuario. CANCELAR A transacao --------------------------------------------------------
-                    printf("<b>Erro na tentativa de Inserir!</b><br>\n");
+                    printf("<b>Erro na tentativa de Inserir! + $cmd</b><br>\n");
                     $mens=$result." : ".$erro;
                     printf("Mensagem: $mens<br>\n");
                     $query=pg_send_query($dbp,"ROLLBACK");
@@ -130,7 +139,7 @@ SWITCH (TRUE)
         } # 1.2.1 - Fim do Laço de repetição para tratar a transação ----------------------------------------------------------------------------
         if ( $mostra )
         { # Executando a função do subprograma com o valor de $CP como PK. --------------------------------------------------------------------------
-            medicosfun02("$PK");
+            funcionrfun02("$PK");
         } # -----------------------------------------------------------------------------------------------------------------------------------------
         # montando os botões do form com a função botoes e os parâmetros:
         # (Página,Menu,Saída,Reset,Ação,$salto) TRUE | FALSE para os 4 parâmetros esq-dir.
@@ -139,5 +148,5 @@ SWITCH (TRUE)
         break;
     } # 1.2-Fim do Bloco de Tratamento da Transação -------------------------------------------------------------------------------------------
 } # 1-Fim do divisor de blocos principal ----------------------------------------------------------------------------------------------------
-terminapagina($acao,"medicosincluir.php",FALSE);
+terminapagina($acao,"funcionrincluir.php",FALSE);
 ?>

@@ -31,17 +31,20 @@ SWITCH (TRUE)
 { # 1 -------------------------------------------------------------------------------------------------------------------------------------------
     case ($passo==1):
     { # 1.1 Vamos montar o formulario para escolha da ordenaÃ§Ã£o dos dados no relatÃ³rio ------------------------------------------------------------
-        printf("<form action='./medicoslistar.php' method='post'>\n");
+        printf("<form action='funcionrlistar.php' method='post'>\n");
         printf("<input type='hidden' name='acao'  value='$acao'>\n");
         printf("<input type='hidden' name='passo' value='2'>\n");
         printf("<input type='hidden' name='salto' value='$salto'>\n");
         printf("Escolha a ordena&ccedil;&atilde;o dos dados do relat&oacute;rio marcando um dos campos<br>\n");
         printf("<table>\n");
-        printf("<tr><td>C&oacute;digo</td>             <td><INPUT TYPE=RADIO NAME='ordem' VALUE='M.cpmedico' CHECKED></td></tr>\n");
-        printf("<tr><td>Nome</td>                      <td><INPUT TYPE=RADIO NAME='ordem' VALUE='M.txnomemedico'></td></tr>\n");
-        printf("<tr><td>Logradouro Moradia</td>        <td><INPUT TYPE=RADIO NAME='ordem' VALUE='L1.txnomelogrmora'></td></tr>\n");
-        printf("<tr><td>Logradouro Cl&iacute;nica</td> <td><INPUT TYPE=RADIO NAME='ordem' VALUE='L2.txnomelogrclin'></td></tr>\n");
-        printf("<tr><td>Data de Cadastro</td>          <td><INPUT TYPE=RADIO NAME='ordem' VALUE='M.dtcadmedico'></td></tr>\n");
+        printf("<tr><td>C&oacute;digo</td>             <td><INPUT TYPE=RADIO NAME='ordem' VALUE='func.cpfuncionario' CHECKED></td></tr>\n");
+        printf("<tr><td>Nome</td>                      <td><INPUT TYPE=RADIO NAME='ordem' VALUE='func.txprenomes'></td></tr>\n");
+        printf("<tr><td>Sobrenome</td>        <td><INPUT TYPE=RADIO NAME='ordem' VALUE='func.txsobrenome'></td></tr>\n");
+        printf("<tr><td>Departamento</td> <td><INPUT TYPE=RADIO NAME='ordem' VALUE='dep.txnomedepto'></td></tr>\n");
+        printf("<tr><td>Função</td> <td><INPUT TYPE=RADIO NAME='ordem' VALUE='funco.txnomefuncao'></td></tr>\n");
+        printf("<tr><td>Logradouro</td> <td><INPUT TYPE=RADIO NAME='ordem' VALUE='log.txnomelogradouro'></td></tr>\n");
+        printf("<tr><td>Nível Educação</td> <td><INPUT TYPE=RADIO NAME='ordem' VALUE='niv.txnomecomum'></td></tr>\n");
+        printf("<tr><td>Data de Cadastro</td>          <td><INPUT TYPE=RADIO NAME='ordem' VALUE='func.dtcadfuncionario'></td></tr>\n");
         printf("</table>\n");
         # montando os botÃµes do form com a funÃ§Ã£o botoes e os parÃ¢metros:
         # (PÃ¡gina,Menu,SaÃ­da,Reset,AÃ§Ã£o,$salto) TRUE | FALSE para os 4 parÃ¢metros esq-dir.
@@ -53,44 +56,45 @@ SWITCH (TRUE)
     { # 1.2 - pegando o valor da variavel $ordena do formulario anterior --------------------------------------------------------------------------
         $ordem=$_POST['ordem'];
         # O proximo comando le a tabela de medicos ordenando os dados pela escolha indicada na variavel $ordem
-        $sql = pg_query("SELECT M.*, L1.txnomelogradouro AS txnomelogrmora, L2.txnomelogradouro AS txnomelogrclin, txnomeespecialidade, txnomeinstituicao
-                            FROM medicos AS M,
-                                 logradouros AS L1, 
-                                 logradouros AS L2, 
-                                 especmedicas AS E, 
-                                 instituicoesensino AS I
-                            WHERE M.celogradouromoradia=L1.cplogradouro AND 
-                                  M.celogradouroclinica=L2.cplogradouro AND
-                                  M.ceespecialidade=E.cpespecialidade AND
-                                  M.ceinstituicao=I.cpinstituicao
+        $sql = pg_query("select * from funcionarios func
+                                    inner join departamentos dep
+                                      on func.cedepto = dep.cpdepto
+                                    inner join funcoes funco
+                                      on func.cefuncao = funco.cpfuncao
+                                    inner join logradouros log
+                                      on func.celogradouro = log.cplogradouro
+                                    inner join niveisdeeducacao niv
+                                      on func.ceniveleducacao = niv.cpniveleducacao
                             ORDER BY $ordem");
         printf("<table border=1>\n");
-        printf("<tr bgcolor='lightblue'><td>M&eacute;dico</td>
-                                    <td>CRM</td>
-                                    <td>Logradouro-Moradia</td>
-                                    <td>Logradouro-Cl&iacute;nica</td>
-                                    <td>Especialidade</td>
-                                    <td>Institui&ccedil;&atilde;o de Ensino</td>
-                                    <td>Situa&ccedil;&atilde;o</td>
-                                    <td>Cadastro</td> </tr>\n");
+        printf("<tr bgcolor='lightblue'><td>Nome</td>
+                                    <td>Sobrenome</td>
+                                    <td>Departamento</td>
+                                    <td>Função</td>
+                                    <td>Logradouro</td>
+                                    <td>Nível Educação&ccedil;&atilde;o</td>
+                                    <td>Data de Cadastro</td> </tr>\n");
         $cor="WHITE";
         while ($le = pg_fetch_array($sql))
         { # 1.2.1 -----------------------------------------------------------------------------------------------------------------------------------
-            $dtcad=explode("-",$le['dtcadmedico']);
-            printf("<tr bgcolor='$cor'><td>$le[cpmedico] - $le[txnomemedico]</td>
-                                  <td>$le[nucrm]</td>
-                                  <td>$le[celogradouromoradia]-$le[txnomelogrmora]-$le[txcomplementomoradia]</td>
-                                  <td>$le[celogradouroclinica]-$le[txnomelogrclin]-$le[txcomplementoclinica]</td>
-                                  <td>$le[ceespecialidade]-$le[txnomeespecialidade]</td>
-                                  <td>$le[ceinstituicao]-$le[txnomeinstituicao]</td>
-                                  <td>".($le['aoativo']=="A" ? "Ativo":"Bloqueado")."</td>
+            $dtcad = explode("-",$le['dtcadfuncionario']);
+            $dtcontr = explode("-",$le['dtcontratacao']);
+            $dtnasc = explode("-",$le['dtnascimento']);
+            printf("<tr bgcolor='$cor'>
+                                  <td>$le[cpfuncionario] - $le[txprenomes]</td>
+                                  <td>$le[txsobrenome]</td>
+                                  <td>$le[cedepto]-$le[txnomedepto]</td>
+                                  <td>$le[cefuncao]-$le[txnomefuncao]</td>
+                                  <td>$le[celogradouro]-$le[txnomelogradouro]</td>
+                                  <td>$le[ceniveleducacao]-$le[txnomecomum]</td>
+                                  
                                   <td>$dtcad[2]/$dtcad[1]/$dtcad[0]</td> </tr>\n");
             $cor=( $cor == "WHITE" ) ? "LIGHTGREEN" : "WHITE";
         } # 1.2.1 -----------------------------------------------------------------------------------------------------------------------------------
         printf("</table>\n");
         if ( $passo==2 )
         { # 1.2.2 vamos montar o botÃ£o para impressÃ£o -----------------------------------------------------------------------------------------------
-            printf("<form action='./medicoslistar.php' method='POST' target='_NEW'>\n");
+            printf("<form action='funcionrlistar.php' method='POST' target='_NEW'>\n");
             printf("<input type='hidden' name='acao'  value='$acao'>\n");
             printf("<input type='hidden' name='passo' value='3'>\n");
             printf("<input type='hidden' name='ordem' value='$ordem'>\n");
