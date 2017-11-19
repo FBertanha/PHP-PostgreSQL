@@ -8,7 +8,7 @@
 # Atualizacao.: 2017-10-26 - Exclusão de linhas de código desnecessárias.
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Carregar o ToolsKit (e executar as funções Gerais disponíveis no grupo de funções)
-require_once("../toolskit.php");# Atribuindo o valor de $passo e $salto.
+require_once("../../toolskit.php");# Atribuindo o valor de $passo e $salto.
 # Atribuir valores às variáveis (usadas na função geral iniciapagina - escrita no toolskit):
 $acao     = "Abertura";
 $corfundo = "#FFDEAD"; # navajowhite

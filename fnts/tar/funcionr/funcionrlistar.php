@@ -13,7 +13,7 @@
 # Modificação.: 2017-11-11 - Adaptado para funcionários. Felipe Bertanha
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Carregar o ToolsKit (e executar as funÃ§Ãµes Gerais disponÃ­veis no grupo de funÃ§Ãµes)
-require_once("../toolskit.php");
+require_once("../../toolskit.php");
 # Carregar o arquivo com as funÃ§Ãµes locais da tabela medicos
 require_once("funcionrfuncoes.php");
 # Atribuindo o valor de $acao, $passo, $salto, $corfundo e $corfonte

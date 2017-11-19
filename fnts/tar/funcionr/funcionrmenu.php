@@ -10,10 +10,10 @@
 # Atualizacao.: 2017-10-24 - Ajustes gerais. Adequação dos alvos dos programas à estrutura dos frames.
 # Modificação.: 2017-11-11 - Adaptado para funcionários. Felipe Bertanha
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
-require_once("../toolskit.php");
+require_once("../../toolskit.php");
 iniciapagina("#FFDEAD","#000000","Menu"); # $cordefundo,$corfonte);
 printf("<table><tr>");
-printf("<td valign=top><font color=red size=4><b>M&eacute;dicos:</b></font></td>");
+printf("<td valign=top><font color=red size=4><b>Funcionários:</b></font></td>");
 printf("<td><form action='funcionrincluir.php'   method='POST' target='Q2'><input type='submit' value='Incluir'></form></td>");
 printf("<td><form action='funcionrconsultar.php' method='POST' target='Q2'><input type='submit' value='Consultar'></form></td>");
 printf("<td><form action='funcionralterar.php'   method='POST' target='Q2'><input type='submit' value='Alterar'></form></td>");

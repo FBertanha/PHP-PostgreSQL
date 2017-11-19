@@ -27,7 +27,7 @@
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Carregando o ToolsKit (e executando as funções Gerais disponíveis no grupo de funções)
 # fazendo a conexão com o banco de dados e recebendo as variáveis globalizadas da conex.
-require_once("../toolskit.php");
+require_once("../../toolskit.phpp");
 # Atrinbuindo valores em $passo e $salto.
 $passo=(isset($_POST['passo']) ? $_POST['passo'] : '1');  // $passo recebe $_POST['passo'] (se houver), senão 1
 $salto=(isset($_POST['salto'])? $_POST['salto']+1:'1');   // $salto recebe $_POST['salto']+1 (se houver), senão 1
