@@ -73,7 +73,7 @@ SWITCH (TRUE)
                                     <td>Departamento</td>
                                     <td>Função</td>
                                     <td>Logradouro</td>
-                                    <td>Nível Educação&ccedil;&atilde;o</td>
+                                    <td>Nível Educação</td>
                                     <td>Data de Cadastro</td> </tr>\n");
         $cor="WHITE";
         while ($le = pg_fetch_array($sql))
